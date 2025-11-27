@@ -1,0 +1,19 @@
+name = "email-to-zammad"
+main = "email-to-zammad.js"
+compatibility_date = "2024-01-01"
+
+# Email Worker
+# https://developers.cloudflare.com/email-routing/email-workers/
+
+[env.production]
+name = "email-to-zammad"
+route = { pattern = "*@vln.gg", custom_domain = false }
+
+# Environment variables (set these using: wrangler secret put VARIABLE_NAME)
+# wrangler secret put ZAMMAD_API_TOKEN
+# wrangler secret put FORWARD_TO
+
+# Example:
+# ZAMMAD_URL = "https://help.vln.gg"
+# ZAMMAD_API_TOKEN = "your-zammad-api-token"
+# FORWARD_TO = "your-personal-email@gmail.com"
