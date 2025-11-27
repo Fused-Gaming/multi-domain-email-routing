@@ -1,0 +1,139 @@
+{
+  "_comment": "Copy this file to domains.json and customize for your domains",
+  "_instructions": [
+    "Each domain key should match exactly what you receive emails at",
+    "Use '*' as a wildcard for subdomains: '*.example.com'",
+    "branding: customize auto-response appearance per domain",
+    "autoResponse: template for automatic replies",
+    "forwardTo: can override global PERSONAL_EMAIL per domain",
+    "rules: conditional processing based on email content"
+  ],
+  
+  "domains": {
+    "example.com": {
+      "enabled": true,
+      "name": "Example Corp",
+      "branding": {
+        "companyName": "Example Corporation",
+        "logo": "https://example.com/logo.png",
+        "primaryColor": "#0066cc",
+        "supportEmail": "support@example.com",
+        "website": "https://example.com",
+        "socialLinks": {
+          "twitter": "https://twitter.com/example",
+          "linkedin": "https://linkedin.com/company/example"
+        },
+        "signature": "The Example Team"
+      },
+      "autoResponse": {
+        "enabled": true,
+        "subject": "Re: {{originalSubject}} [{{trackingNumber}}]",
+        "template": "default",
+        "delayMinutes": 0,
+        "businessHoursOnly": false
+      },
+      "forwardTo": null,
+      "rules": [
+        {
+          "name": "Sales Inquiries",
+          "match": {
+            "toContains": ["sales", "pricing", "quote"],
+            "subjectContains": ["pricing", "quote", "cost"]
+          },
+          "action": {
+            "template": "sales",
+            "priority": "high",
+            "tags": ["sales", "lead"]
+          }
+        },
+        {
+          "name": "Support Tickets",
+          "match": {
+            "toContains": ["support", "help", "ticket"]
+          },
+          "action": {
+            "template": "support",
+            "priority": "normal",
+            "tags": ["support"]
+          }
+        }
+      ]
+    },
+    
+    "myproject.io": {
+      "enabled": true,
+      "name": "My Project",
+      "branding": {
+        "companyName": "My Project",
+        "logo": "https://myproject.io/assets/logo.png",
+        "primaryColor": "#7c3aed",
+        "supportEmail": "hello@myproject.io",
+        "website": "https://myproject.io",
+        "signature": "My Project Team"
+      },
+      "autoResponse": {
+        "enabled": true,
+        "subject": "Thanks for reaching out! [Ref: {{trackingNumber}}]",
+        "template": "casual",
+        "delayMinutes": 0
+      },
+      "forwardTo": null,
+      "rules": []
+    },
+    
+    "*.mycompany.com": {
+      "_comment": "Wildcard matches all subdomains: dev.mycompany.com, staging.mycompany.com, etc.",
+      "enabled": true,
+      "name": "My Company (Subdomain)",
+      "branding": {
+        "companyName": "My Company",
+        "logo": "https://mycompany.com/logo.png",
+        "primaryColor": "#10b981",
+        "supportEmail": "info@mycompany.com",
+        "website": "https://mycompany.com",
+        "signature": "My Company"
+      },
+      "autoResponse": {
+        "enabled": false
+      },
+      "forwardTo": null,
+      "rules": []
+    }
+  },
+  
+  "defaultDomain": {
+    "_comment": "Settings for any domain not explicitly configured",
+    "enabled": true,
+    "name": "Unknown Domain",
+    "branding": {
+      "companyName": "Contact",
+      "primaryColor": "#6b7280",
+      "signature": "Thank you"
+    },
+    "autoResponse": {
+      "enabled": false
+    },
+    "forwardTo": null,
+    "rules": []
+  },
+  
+  "globalSettings": {
+    "businessHours": {
+      "timezone": "America/Los_Angeles",
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "startHour": 9,
+      "endHour": 17
+    },
+    "blockedSenders": [
+      "noreply@",
+      "no-reply@",
+      "mailer-daemon@",
+      "postmaster@"
+    ],
+    "blockedDomains": [
+      "mailinator.com",
+      "guerrillamail.com",
+      "10minutemail.com"
+    ]
+  }
+}
