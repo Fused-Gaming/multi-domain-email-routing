@@ -1,0 +1,83 @@
+# =============================================================================
+# Cloudflare Worker Configuration
+# =============================================================================
+# Copy this to wrangler.toml and customize for your setup
+# See: https://developers.cloudflare.com/workers/wrangler/configuration/
+# =============================================================================
+
+name = "multi-domain-email-handler"
+main = "src/workers/email-worker.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# -----------------------------------------------------------------------------
+# Account Settings (uncomment and fill in)
+# -----------------------------------------------------------------------------
+# account_id = "your-cloudflare-account-id"
+
+# -----------------------------------------------------------------------------
+# Environment Variables
+# -----------------------------------------------------------------------------
+# These can also be set via `wrangler secret put VARIABLE_NAME`
+
+[vars]
+TRACKING_PREFIX = "TKT"
+
+# -----------------------------------------------------------------------------
+# Secrets (set via CLI: wrangler secret put SECRET_NAME)
+# -----------------------------------------------------------------------------
+# FORWARD_TO - Your personal email address to forward all emails to
+# DOMAIN_CONFIG - JSON string with domain configurations
+
+# -----------------------------------------------------------------------------
+# KV Namespace Binding (for rate limiting)
+# -----------------------------------------------------------------------------
+# Create with: wrangler kv:namespace create "EMAIL_KV"
+# Then uncomment below with your namespace ID
+
+# [[kv_namespaces]]
+# binding = "EMAIL_KV"
+# id = "your-kv-namespace-id"
+
+# -----------------------------------------------------------------------------
+# Email Routing Binding (for sending auto-responses)
+# -----------------------------------------------------------------------------
+# See: https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/
+
+# [send_email]
+# binding = "SEND_EMAIL"
+
+# -----------------------------------------------------------------------------
+# Development Settings
+# -----------------------------------------------------------------------------
+[dev]
+port = 8787
+local_protocol = "http"
+
+# -----------------------------------------------------------------------------
+# Production Environment
+# -----------------------------------------------------------------------------
+# [env.production]
+# vars = { TRACKING_PREFIX = "PRD" }
+
+# -----------------------------------------------------------------------------
+# Notes on Setup
+# -----------------------------------------------------------------------------
+# 1. Set secrets via CLI:
+#    wrangler secret put FORWARD_TO
+#    wrangler secret put DOMAIN_CONFIG
+#
+# 2. Create KV namespace:
+#    wrangler kv:namespace create "EMAIL_KV"
+#    Then add the ID to the kv_namespaces section above
+#
+# 3. Configure Email Routing in Cloudflare Dashboard:
+#    - Go to your domain > Email > Email Routing
+#    - Enable Email Routing
+#    - Set catch-all to "Send to Worker" and select this worker
+#
+# 4. For sending auto-responses, configure send_email binding
+#    and verify destination addresses in Cloudflare dashboard
+#
+# 5. Deploy:
+#    wrangler deploy

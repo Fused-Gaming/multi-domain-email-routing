@@ -1,0 +1,42 @@
+{
+  "name": "multi-domain-email-handler",
+  "version": "1.0.0",
+  "description": "Multi-domain email catch-all handler with tracking, auto-responses, and loop prevention",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node src/test.js",
+    "worker:build": "wrangler deploy --dry-run",
+    "worker:deploy": "wrangler deploy",
+    "setup": "node scripts/setup.js"
+  },
+  "keywords": [
+    "email",
+    "catch-all",
+    "multi-domain",
+    "auto-responder",
+    "tracking"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "imapflow": "^1.0.153",
+    "mailparser": "^3.6.5",
+    "nodemailer": "^6.9.7",
+    "uuid": "^9.0.1",
+    "handlebars": "^4.7.8",
+    "better-sqlite3": "^9.2.2",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "postal-mime": "^2.2.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.22.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
